@@ -48,7 +48,7 @@ namespace Census
 
             Stopwatch timer = new Stopwatch();
             timer.Start();
-            ProgressBar progressBar = new ProgressBar(1_000, "Unknown");
+            ProgressBar progressBar = new ProgressBar(10_000, "Unknown");
             IProgress<(double Progress, string Message)> progress =
                 progressBar.AsProgress<(double Progress, string Message)>(
                     pair => pair.Message,

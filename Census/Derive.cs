@@ -33,7 +33,7 @@ namespace Census
 
             Log.Logger.Information("Generating avatar addresses from agent addresses");
 
-            ProgressBar progressBar = new ProgressBar(1_000, "Unknown");
+            ProgressBar progressBar = new ProgressBar(10_000, "Unknown");
             IProgress<(double Progress, string Message)> progress =
                 progressBar.AsProgress<(double Progress, string Message)>(
                     pair => pair.Message,
