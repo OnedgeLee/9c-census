@@ -72,11 +72,6 @@ namespace Census
                 {
                     progress.Report(
                         (Utils.EstimateProgress(currentAgentAddress), $"Agent address: {currentAgentAddress}, value count: {valueCount}, agent count: {agentCount}"));
-
-                    if (Utils.EstimateProgress(currentAgentAddress) > 0.04)
-                    {
-                        break;
-                    }
                 }
             }
 
