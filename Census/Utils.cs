@@ -2,16 +2,39 @@ using Libplanet.Action;
 using Libplanet.Action.Loader;
 using Libplanet.Action.State;
 using Libplanet.Blockchain;
+using Libplanet.Crypto;
 using Libplanet.RocksDBStore;
 using Libplanet.Store;
 using Libplanet.Store.Trie;
 using Libplanet.Types.Blocks;
 using Serilog;
+using System.Collections.Immutable;
 
 namespace Census
 {
     public static class Utils
     {
+        private static readonly ImmutableDictionary<int, byte> _reverseConversionTable =
+            new Dictionary<int, byte>()
+            {
+                [48] = 0,   // '0'
+                [49] = 1,   // '1'
+                [50] = 2,   // '2'
+                [51] = 3,   // '3'
+                [52] = 4,   // '4'
+                [53] = 5,   // '5'
+                [54] = 6,   // '6'
+                [55] = 7,   // '7'
+                [56] = 8,   // '8'
+                [57] = 9,   // '9'
+                [97] = 10,  // 'a'
+                [98] = 11,  // 'b'
+                [99] = 12,  // 'c'
+                [100] = 13, // 'd'
+                [101] = 14, // 'e'
+                [102] = 15, // 'f'
+            }.ToImmutableDictionary();
+
         public static (BlockChain, IStore, IStateStore) LoadBlockChain(string storePath)
         {
             Uri uri = new Uri(storePath);
@@ -101,5 +124,26 @@ namespace Census
                 ? (double)(high - pos) / high
                 : (double)pos / high;
         }
+
+        public static Address ToAddress(KeyBytes keyBytes)
+        {
+            const int length = Address.Size * 2;
+            if (keyBytes.Length != length)
+            {
+                throw new ArgumentException(
+                    $"Given {nameof(keyBytes)} must be of length {length}: {keyBytes.Length}");
+            }
+
+            byte[] buffer = new byte[Address.Size];
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                buffer[i] = Pack(keyBytes.ByteArray[i * 2], keyBytes.ByteArray[i * 2 + 1]);
+            }
+
+            return new Address(buffer);
+        }
+
+        private static byte Pack(byte x, byte y) =>
+            (byte)((_reverseConversionTable[x] << 4) + _reverseConversionTable[y]);
     }
 }
