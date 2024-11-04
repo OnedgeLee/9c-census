@@ -16,8 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\lib9c\Lib9c\Lib9c.csproj" />
-    <ProjectReference Include="..\lib9c\.libplanet\Libplanet\Libplanet.csproj" />
-    <ProjectReference Include="..\lib9c\.libplanet\Libplanet.RocksDBStore\Libplanet.RocksDBStore.csproj" />
+    <ProjectReference Include="..\lib9c\.Libplanet\src\Libplanet\Libplanet.csproj" />
+    <ProjectReference Include="..\lib9c\.Libplanet\src\Libplanet.RocksDBStore\Libplanet.RocksDBStore.csproj" />
   </ItemGroup>
 
 </Project>

@@ -71,7 +71,7 @@ namespace Census
             IBlockChainStates blockChainStates = new BlockChainStates(store, stateStore);
             IActionLoader actionLoader = new SingleActionLoader(typeof(MockAction));
             IActionEvaluator actionEvaluator = new ActionEvaluator(
-                policyBlockActionGetter: _ => null,
+                policyActionsRegistry: new PolicyActionsRegistry(),
                 stateStore: stateStore,
                 actionTypeLoader: actionLoader);
 
